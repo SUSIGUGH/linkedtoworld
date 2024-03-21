@@ -5,7 +5,7 @@ type = string
 }
 variable "subnet_id"{
 type = string
- default = "subnet-0677255b00eda5306"
+ default = "subnet-0594e3037f43c9d87"
  description = "Subnet for the Cluster"
 }
 variable "ec2_ami"{
