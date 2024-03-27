@@ -12,7 +12,7 @@ pipeline {
         
         stage('Create Cluster') {
             steps {
-                sh 'cd linkedtoworld/terraform && ls -ltr && terraform init && terraform validate && terraform plan && terraform apply -auto-approve && terraform destroy -auto-approve '
+                sh 'cd linkedtoworld/terraform && ls -ltr && terraform init && terraform validate && terraform plan && terraform apply -auto-approve'
             }
         }  
         
