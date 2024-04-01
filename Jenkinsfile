@@ -24,7 +24,7 @@ pipeline {
 stage('Generate variables for master and worker ip') {
             steps {
                script{
-                def masterip = $(cd linkedtoworld/terraform && terraform output | head -1 | cut -d"=" -f2 )
+                def masterip = sh(returnStdout: true, script: 'cd linkedtoworld/terraform && terraform output | head -1 | cut -d"=" -f2')
 		}
                 sh 'terraform output | tail -1 | cut -d"=" -f2 > /tmp/wokerip.txt'
                 sh 'chmod 600 linkedtoworld.pem'
