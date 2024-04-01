@@ -24,8 +24,8 @@ pipeline {
 
 stage('Generate variables for master and worker ip') {
             steps {
-                sh 'export masterip=$(terraform output | head -1 | cut -d"=" -f2 | cut -d'"' -f2)'
-                sh 'terraform output | tail -1 | cut -d"=" -f2 | cut -d'"' -f2 > /tmp/wokerip.txt'
+                sh 'export masterip=$(terraform output | head -1 | cut -d"=" -f2 )'
+                sh 'terraform output | tail -1 | cut -d"=" -f2 > /tmp/wokerip.txt'
             }
         } 
 
