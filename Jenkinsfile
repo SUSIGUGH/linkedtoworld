@@ -1,9 +1,5 @@
 pipeline {
     agent any
-environment {
-                masterip = ''
-                workerip = ''
-            }
     stages {
         
         stage('Git Clone') {
@@ -28,13 +24,12 @@ environment {
 stage('Generate variables for master and worker ip') {
             steps {
                script{
-                env.masterip = $(terraform output | head -1 | cut -d"=" -f2 )'
+                def masterip = $(cd linkedtoworld/terraform && terraform output | head -1 | cut -d"=" -f2 )'
 		}
                 sh 'terraform output | tail -1 | cut -d"=" -f2 > /tmp/wokerip.txt'
                 sh 'chmod 600 linkedtoworld.pem'
-                sh 'echo env.masterip'
-                sh 'scp -i linkedtoworld.pem -o StrictHostKeyChecking=no linkedtoworld.pem /tmp/wokerip.txt ec2-user@env.masterip:/home/ec2-user'
-                sh 'ssh -i linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@env.masterip "export workerip=$(cat ~/workerip.txt"'
+                sh 'scp -i linkedtoworld.pem -o StrictHostKeyChecking=no linkedtoworld.pem /tmp/wokerip.txt ec2-user@${masterip}:/home/ec2-user'
+                sh 'ssh -i linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${masterip} "export workerip=$(cat ~/workerip.txt"'
             }
         }
 
