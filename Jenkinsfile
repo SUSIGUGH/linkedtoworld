@@ -27,7 +27,7 @@ MASTERIP = "none"
 }
 
             steps {
-                env.MASTERIP = """${sh(returnStdout: true, script: 'cd linkedtoworld/terraform && terraform output | head -1 | cut -d"=" -f2')}"""
+//                env.MASTERIP = """${sh(returnStdout: true, script: 'cd linkedtoworld/terraform && terraform output | head -1 | cut -d"=" -f2')}"""
                 echo "MASTER IP is ${env.MASTERIP}"
                // sh 'cd linkedtoworld/terraform && terraform output | tail -1 | cut -d"=" -f2 > /tmp/wokerip.txt'
                // sh 'cd linkedtoworld && chmod 600 linkedtoworld.pem'
