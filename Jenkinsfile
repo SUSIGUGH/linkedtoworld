@@ -25,14 +25,17 @@ pipeline {
             }
         }
 
-stage('Generate variables for master and worker ip') {
-environment {
-MASTERIP = "none"
-}
+	stage('Generate variables for master and worker ip') {
+	environment {
+	MASTERIP = ""
+	WORKERIP = ""
+	}
 
             steps {
+		script {
 		env.MASTERIP = sh(returnStdout: true, script: 'tail -1 /tmp/mstip.txt | xargs | tr -d [:space:]')
-		env.WORKERIP = sh(returnStdout: true, script: 'tail -1 /tmp/mstip.txt | xargs | tr -d [:space:]')
+		env.WORKERIP = sh(returnStdout: true, script: 'tail -1 /tmp/wrkip.txt | xargs | tr -d [:space:]')
+		}
 //                echo "MASTER IP is ${env.MASTERIP}"
                // sh 'cd linkedtoworld/terraform && terraform output | tail -1 | cut -d"=" -f2 > /tmp/wokerip.txt'
                // sh 'cd linkedtoworld && chmod 600 linkedtoworld.pem'
