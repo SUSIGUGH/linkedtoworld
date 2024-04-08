@@ -25,11 +25,6 @@ pipeline {
         }
 
 	stage('Generate variables for master and worker ip') {
-	environment {
-	MASTERIP = ""
-	WORKERIP = ""
-	}
-
             steps {
 		script {
 		env.MASTERIP = sh(returnStdout: true, script: 'tail -1 /tmp/mstip.txt | xargs | tr -d [:space:]')
