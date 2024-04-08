@@ -35,6 +35,9 @@ pipeline {
 		env.MASTERIP = sh(returnStdout: true, script: 'tail -1 /tmp/mstip.txt | xargs | tr -d [:space:]')
 		env.WORKERIP = sh(returnStdout: true, script: 'tail -1 /tmp/wrkip.txt | xargs | tr -d [:space:]')
 		}
+		sh 'scp -i linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${env.MASTERIP}:/home/ec2-user/' 
+		sh 'ssh -i linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${env.MASTERIP} "scp -i ~/linkedtoworld.pem -o StrictHostKeyChecking=no /tmp/kubeadmjoin.sh ec2-user@${env.WORKERIP}:/home/ec2-user/"'
+		sh 'ssh -i linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${env.WORKERIP} "sh ~/kubeadmjoin.sh"'
 //                echo "MASTER IP is ${env.MASTERIP}"
                // sh 'cd linkedtoworld/terraform && terraform output | tail -1 | cut -d"=" -f2 > /tmp/wokerip.txt'
                // sh 'cd linkedtoworld && chmod 600 linkedtoworld.pem'
