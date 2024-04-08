@@ -13,7 +13,7 @@ pipeline {
             steps {
 		sh 'mkdir terraform'
 		sh 'cp linkedtoworld/terraform/* terraform/'
-                sh 'cd terraform && ls -ltr && terraform init && terraform validate && terraform plan && terraform apply -auto-approve'
+                sh 'cd terraformi && ls -ltr && terraform init && terraform validate && terraform plan && terraform apply -auto-approve'
             }
         } 
      
@@ -29,8 +29,9 @@ MASTERIP = "none"
 }
 
             steps {
-                env.MASTERIP = ${sh(returnStdout: true, script: 'cd terraform && terraform output | grep masterpubip | cut -d"=" -f2 > /tmp/mstip.txt')}
-                echo "MASTER IP is ${env.MASTERIP}"
+//                env.MASTERIP = 'cd terraform && terraform output | grep masterpubip | cut -d"=" -f2 > /tmp/mstip.txt'
+                  env.MASTERIP = ${sh(returnStdout: true, script: 'cd terraform && terraform output | grep "masterpubip" | cut -d"=" -f2 > /tmp/mstip.txt')}
+//                echo "MASTER IP is ${env.MASTERIP}"
                // sh 'cd linkedtoworld/terraform && terraform output | tail -1 | cut -d"=" -f2 > /tmp/wokerip.txt'
                // sh 'cd linkedtoworld && chmod 600 linkedtoworld.pem'
                 //sh 'cd linkedtoworld && scp -i linkedtoworld.pem -o StrictHostKeyChecking=no linkedtoworld.pem /tmp/wokerip.txt ec2-user@${masterip}:/home/ec2-user'
