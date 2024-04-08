@@ -31,8 +31,8 @@ pipeline {
 		env.WORKERIP = sh(returnStdout: true, script: 'tail -1 /tmp/wrkip.txt | xargs | tr -d [:space:]')
 		}
 		sh 'chmod 600 linkedtoworld/linkedtoworld.pem && scp -i linkedtoworld/linkedtoworld.pem -o StrictHostKeyChecking=no linkedtoworld/linkedtoworld.pem ec2-user@${MASTERIP}:/home/ec2-user/' 
-		sh 'chmod 600 linkedtoworld/linkedtoworld.pem && ssh -i linkedtoworld/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${MASTERIP} "scp -i ~/linkedtoworld.pem -o StrictHostKeyChecking=no /tmp/kubeadmjoin.sh ec2-user@${env.WORKERIP}:/home/ec2-user/"'
-		sh 'ssh -i linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${env.WORKERIP} "sh ~/kubeadmjoin.sh"'
+		sh 'chmod 600 linkedtoworld/linkedtoworld.pem && ssh -i linkedtoworld/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${MASTERIP} "scp -i ~/linkedtoworld.pem -o StrictHostKeyChecking=no /tmp/kubeadmjoin.sh ec2-user@${WORKERIP}:/home/ec2-user/"'
+		sh 'ssh -i linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${WORKERIP} "sh ~/kubeadmjoin.sh"'
 //                echo "MASTER IP is ${env.MASTERIP}"
                // sh 'cd linkedtoworld/terraform && terraform output | tail -1 | cut -d"=" -f2 > /tmp/wokerip.txt'
                // sh 'cd linkedtoworld && chmod 600 linkedtoworld.pem'
