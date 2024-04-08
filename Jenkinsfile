@@ -14,6 +14,8 @@ pipeline {
 		sh 'mkdir terraform'
 		sh 'cp linkedtoworld/terraform/* terraform/'
                 sh 'cd terraformi && ls -ltr && terraform init && terraform validate && terraform plan && terraform apply -auto-approve'
+      		sh 'cd terraform && terraform output | grep masterpubip | cut -d"=" -f2 > /tmp/mstip.txt'
+      		sh 'cd terraform && terraform output | grep workerpubip | cut -d"=" -f2 > /tmp/wrkip.txt'
             }
         } 
      
@@ -29,8 +31,8 @@ MASTERIP = "none"
 }
 
             steps {
-//                env.MASTERIP = 'cd terraform && terraform output | grep masterpubip | cut -d"=" -f2 > /tmp/mstip.txt'
-                  env.MASTERIP = ${sh(returnStdout: true, script: 'cd terraform && terraform output | grep "masterpubip" | cut -d"=" -f2 > /tmp/mstip.txt')}
+		env.MASTERIP = sh(returnStdout: true, script: 'tail -1 /tmp/mstip.txt | xargs | tr -d [:space:]')
+		env.WORKERIP = sh(returnStdout: true, script: 'tail -1 /tmp/mstip.txt | xargs | tr -d [:space:]')
 //                echo "MASTER IP is ${env.MASTERIP}"
                // sh 'cd linkedtoworld/terraform && terraform output | tail -1 | cut -d"=" -f2 > /tmp/wokerip.txt'
                // sh 'cd linkedtoworld && chmod 600 linkedtoworld.pem'
