@@ -11,9 +11,8 @@ pipeline {
         
         stage('Create Cluster') {
             steps {
-		sh 'mkdir terraform'
 		sh 'cp linkedtoworld/terraform/* terraform/'
-                sh 'cd terraformi && ls -ltr && terraform init && terraform validate && terraform plan && terraform apply -auto-approve'
+                sh 'cd terraform && ls -ltr && terraform init && terraform validate && terraform plan && terraform apply -auto-approve'
       		sh 'cd terraform && terraform output | grep masterpubip | cut -d"=" -f2 > /tmp/mstip.txt'
       		sh 'cd terraform && terraform output | grep workerpubip | cut -d"=" -f2 > /tmp/wrkip.txt'
             }
