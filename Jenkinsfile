@@ -32,7 +32,7 @@ pipeline {
 		}
 		sh 'chmod 600 linkedtoworld/linkedtoworld.pem && scp -i linkedtoworld/linkedtoworld.pem -o StrictHostKeyChecking=no linkedtoworld/linkedtoworld.pem ec2-user@${MASTERIP}:/home/ec2-user/' 
 		sh 'chmod 600 linkedtoworld/linkedtoworld.pem && ssh -i linkedtoworld/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${MASTERIP} "scp -i ~/linkedtoworld.pem -o StrictHostKeyChecking=no /tmp/kubeadmjoin.sh ec2-user@${WORKERIP}:/home/ec2-user/"'
-		sh 'ssh -i linkedtoworld/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${WORKERIP} "sh /home/ec2-user/kubeadmjoin.sh"'
+		sh 'ssh -i linkedtoworld/linkedtoworld.pem -o StrictHostKeyChecking=no ec2-user@${WORKERIP} "sudo sh /home/ec2-user/kubeadmjoin.sh"'
 //                echo "MASTER IP is ${env.MASTERIP}"
                // sh 'cd linkedtoworld/terraform && terraform output | tail -1 | cut -d"=" -f2 > /tmp/wokerip.txt'
                // sh 'cd linkedtoworld && chmod 600 linkedtoworld.pem'
